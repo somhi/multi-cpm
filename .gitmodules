@@ -1,0 +1,3 @@
+[submodule "DeMiSTify"]
+	path = DeMiSTify
+	url = https://github.com/somhi/DeMiSTify.git

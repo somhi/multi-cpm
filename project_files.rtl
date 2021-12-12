@@ -1,7 +1,9 @@
 # files inherited from the guest core:
-
 MultiCPM.qip
+
 sys/sys.qip
+
+# VHDL definitions for the core
 demistify_config_pkg.vhd
 
 # The controller module
@@ -13,3 +15,4 @@ firmware/controller_rom2_byte.vhd
 
 # Pre-flow scripts
 rtl/build_id.tcl
+

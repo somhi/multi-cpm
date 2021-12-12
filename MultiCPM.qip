@@ -1,21 +1,27 @@
-set_global_assignment -name VHDL_FILE ../rtl/Components/Z80/T80_Reg.vhd
-set_global_assignment -name VHDL_FILE ../rtl/Components/Z80/T80_Pack.vhd
-set_global_assignment -name VHDL_FILE ../rtl/Components/Z80/T80_MCode.vhd
-set_global_assignment -name VHDL_FILE ../rtl/Components/Z80/T80_ALU.vhd
-set_global_assignment -name VHDL_FILE ../rtl/Components/Z80/T80.vhd
-set_global_assignment -name VHDL_FILE ../rtl/Components/Z80/T80s.vhd
-set_global_assignment -name VHDL_FILE ../ssdram.vhd
-set_global_assignment -name SYSTEMVERILOG_FILE ../MultiCPM.sv
-set_global_assignment -name VHDL_FILE ../rtl/Microcomputer.vhd
-set_global_assignment -name QIP_FILE ../rtl/ROMS/Z80/Z80_CMON_ROM.qip
-set_global_assignment -name QIP_FILE ../rtl/Components/TERMINAL/DisplayRam1K.qip
-set_global_assignment -name QIP_FILE ../rtl/Components/TERMINAL/CGABoldRomReduced.qip
-set_global_assignment -name VHDL_FILE ../rtl/Components/UART/bufferedUART.vhd
-set_global_assignment -name QIP_FILE ../rtl/Components/TERMINAL/CGABoldRom.qip
-set_global_assignment -name VHDL_FILE ../rtl/Components/TERMINAL/SBCTextDisplayRGB.vhd
-set_global_assignment -name QIP_FILE ../rtl/Components/TERMINAL/DisplayRam2K.qip
-set_global_assignment -name VHDL_FILE ../rtl/Components/TERMINAL/keyMapRom.vhd
-set_global_assignment -name VHDL_FILE ../rtl/Components/SDCARD/sd_controller.vhd
-set_global_assignment -name VHDL_FILE ../rtl/Components/MMU/MMU4.vhd
-set_global_assignment -name VHDL_FILE ../rtl/Components/BRG/brg.vhd
-set_global_assignment -name VHDL_FILE ../rtl/ssdram.vhd
+set_global_assignment -name VHDL_FILE [file join $::quartus(qip_path) rtl/Microcomputer.vhd]
+set_global_assignment -name QIP_FILE  [file join $::quartus(qip_path) rtl/ROMS/Z80/Z80_CMON_ROM.qip]
+set_global_assignment -name QIP_FILE  [file join $::quartus(qip_path) rtl/Components/TERMINAL/DisplayRam1K.qip]
+set_global_assignment -name QIP_FILE  [file join $::quartus(qip_path) rtl/Components/TERMINAL/CGABoldRomReduced.qip]
+set_global_assignment -name VHDL_FILE [file join $::quartus(qip_path) rtl/Components/Z80/T80s.vhd]
+set_global_assignment -name VHDL_FILE [file join $::quartus(qip_path) rtl/Components/Z80/T80_Reg.vhd]
+set_global_assignment -name VHDL_FILE [file join $::quartus(qip_path) rtl/Components/Z80/T80_Pack.vhd]
+set_global_assignment -name VHDL_FILE [file join $::quartus(qip_path) rtl/Components/Z80/T80_MCode.vhd]
+set_global_assignment -name VHDL_FILE [file join $::quartus(qip_path) rtl/Components/Z80/T80_ALU.vhd]
+set_global_assignment -name VHDL_FILE [file join $::quartus(qip_path) rtl/Components/Z80/T80.vhd]
+set_global_assignment -name VHDL_FILE [file join $::quartus(qip_path) rtl/Components/UART/bufferedUART.vhd]
+set_global_assignment -name QIP_FILE  [file join $::quartus(qip_path) rtl/Components/TERMINAL/CGABoldRom.qip]
+set_global_assignment -name VHDL_FILE [file join $::quartus(qip_path) rtl/Components/TERMINAL/SBCTextDisplayRGB.vhd]
+set_global_assignment -name QIP_FILE  [file join $::quartus(qip_path) rtl/Components/TERMINAL/DisplayRam2K.qip]
+set_global_assignment -name VHDL_FILE [file join $::quartus(qip_path) rtl/Components/TERMINAL/keyMapRom.vhd]
+set_global_assignment -name VHDL_FILE [file join $::quartus(qip_path) rtl/Components/SDCARD/sd_controller.vhd]
+set_global_assignment -name VHDL_FILE [file join $::quartus(qip_path) rtl/Components/MMU/MMU4.vhd]
+set_global_assignment -name VHDL_FILE [file join $::quartus(qip_path) rtl/Components/BRG/brg.vhd]
+set_global_assignment -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) MultiCPM.sv]
+
+set_global_assignment -name VHDL_FILE [file join $::quartus(qip_path) rtl/ssdram.vhd]
+
+set_global_assignment -name SDC_FILE [file join $::quartus(qip_path) MultiCPM.sdc]
+
+#set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) rtl/RAM/sram.v]
+
+

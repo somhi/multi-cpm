@@ -1,15 +1,18 @@
 DEMISTIFYPATH=DeMiSTify
-SUBMODULES=$(DEMISTIFYPATH)/EightThirtyTwo/Makefile
-PROJECT=MultiCPM
+SUBMODULES=$(DEMISTIFYPATH)/EightThirtyTwo/lib832/lib832.a
+PROJECT=multi-cpm
 PROJECTPATH=./
 PROJECTTOROOT=../
-BOARD=neptuno uareloaded deca sidi mist
+BOARD=
 ROMSIZE1=8192
-ROMSIZE2=8192
+ROMSIZE2=4096
 
-all: $(DEMISTIFYPATH)/site.mk firmware init compile tns mist
+all: $(DEMISTIFYPATH)/site.template $(DEMISTIFYPATH)/site.mk $(SUBMODULES) firmware init compile tns
+# Use the file least likely to change within DeMiSTify to detect submodules!
+$(DEMISTIFYPATH)/COPYING:
+	git submodule update --init --recursive
 
-$(DEMISTIFYPATH)/site.mk: $(SUBMODULES)
+$(DEMISTIFYPATH)/site.mk: $(DEMISTIFYPATH)/COPYING
 	$(info ******************************************************)
 	$(info Please copy the example DeMiSTify/site.template file to)
 	$(info DeMiSTify/site.mk and edit the paths for the version(s))
@@ -19,13 +22,19 @@ $(DEMISTIFYPATH)/site.mk: $(SUBMODULES)
 
 include $(DEMISTIFYPATH)/site.mk
 
-$(SUBMODULES):
+$(DEMISTIFYPATH)/EightThirtyTwo/Makefile:
 	git submodule update --init --recursive
+
+$(SUBMODULES): $(DEMISTIFYPATH)/EightThirtyTwo/Makefile
 	make -C $(DEMISTIFYPATH) -f bootstrap.mk
 
 .PHONY: firmware
 firmware: $(SUBMODULES)
 	make -C firmware -f ../$(DEMISTIFYPATH)/firmware/Makefile DEMISTIFYPATH=../$(DEMISTIFYPATH) ROMSIZE1=$(ROMSIZE1) ROMSIZE2=$(ROMSIZE2)
+
+.PHONY: firmware_clean
+firmware_clean: $(SUBMODULES)
+	make -C firmware -f ../$(DEMISTIFYPATH)/firmware/Makefile DEMISTIFYPATH=../$(DEMISTIFYPATH) ROMSIZE1=$(ROMSIZE1) ROMSIZE2=$(ROMSIZE2) clean
 
 .PHONY: init
 init:
@@ -44,11 +53,20 @@ tns:
 	@for BOARD in ${BOARDS}; do \
 		echo $$BOARD; \
 		grep -r Design-wide\ TNS $$BOARD/output_files/*.rpt; \
+		echo -ne '\007'; \
 	done
 
-# MiST is now covered by the framework, with a thin wrapper
-#.PHONY: mist
-#mist:
-#	@echo -n "Compiling $(PROJECT) for mist... "
-#	@$(Q13)/quartus_sh >compile.log --flow compile c16_mist.qpf
+.PHONY: mist
+mist:
+	@echo -n "Compiling $(PROJECT) for MiST... "
+	@$(QUARTUS_MIST)/quartus_sh >mist/compile.log --flow compile mist/$(PROJECT)_MiST.qpf \
+		&& echo "\033[32mSuccess\033[0m" || grep Error mist/compile.log
+	@grep -r Design-wide\ TNS mist/output_files/*.rpt
+
+.PHONY: mister
+mister:
+	@echo -n "Compiling $(PROJECT) for MiSTer... "
+	@$(QUARTUS_MISTER)/quartus_sh >MiSTer/compile.log --flow compile MiSTer/$(PROJECT)_MiSTer.qpf \
+		&& echo "\033[32mSuccess\033[0m" || grep Error MiSTer/compile.log
+	@grep -r Design-wide\ TNS MiSTer/output_files/*.rpt
 

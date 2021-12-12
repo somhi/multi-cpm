@@ -21,26 +21,15 @@
 
 module MultiCPM
 (       
-        output        LED,                                              
-        output        VGA_HS,
-        output        VGA_VS,
-        output        AUDIO_L,
-        output        AUDIO_R, 
-		  output [9:0]  DAC_L, 
-		  output [9:0]  DAC_R, 
-        input         TAPE_IN,
-        input         UART_RX,
-        output        UART_TX,
+        input         CLOCK_27,
+        output        LED,         
+
         input         SPI_SCK,
         output        SPI_DO,
         input         SPI_DI,
         input         SPI_SS2,
         input         SPI_SS3,
         input         CONF_DATA0,
-        input         CLOCK_27,
-        output  [5:0] VGA_R,
-        output  [5:0] VGA_G,
-        output  [5:0] VGA_B,
 
 		  output [12:0] SDRAM_A,
 		  inout  [15:0] SDRAM_DQ,
@@ -52,7 +41,28 @@ module MultiCPM
         output        SDRAM_nCS,
         output  [1:0] SDRAM_BA,
         output        SDRAM_CLK,
-        output        SDRAM_CKE
+        output        SDRAM_CKE,
+
+        output        VGA_HS,
+        output        VGA_VS,
+        output  [5:0] VGA_R,
+        output  [5:0] VGA_G,
+        output  [5:0] VGA_B,
+
+//        input         TAPE_IN,
+//        input         UART_RX,
+//        output        UART_TX,
+        
+         `ifdef DEMISTIFY
+         output [9:0]  DAC_L, 
+         output [9:0]  DAC_R, 
+         `endif
+
+        output        AUDIO_L,
+        output        AUDIO_R
+
+
+
 );
 
 
@@ -265,10 +275,12 @@ dac #(10) dac_l (
    .dac_o        (AUDIO_L)
 );
 
-assign DAC_L=audio;
-assign DAC_R=audio;
 assign AUDIO_R=AUDIO_L;
 
+`ifdef DEMISTIFY
+assign DAC_L=audio;
+assign DAC_R=audio;
+`endif
 
 
 
